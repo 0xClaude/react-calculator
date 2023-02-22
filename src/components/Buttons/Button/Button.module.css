@@ -1,7 +1,14 @@
 .button {
     background-color: rgb(101, 101, 101);
+    text-align: center;
+    width: 2rem;
     padding: 2rem;
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.center {
+    background-color: rgb(243, 240, 240);
 }
 
 .button:hover {

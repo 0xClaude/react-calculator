@@ -13,8 +13,9 @@ export default function Buttons() {
     const math = create(all, config);
 
     const addInput = (input) => {
+        if (input === "." && result.indexOf(".") > -1) { return }
         if (result === 0 || result === "0") {
-            setResult(String(input))
+            input === "." ? setResult("0.") : setResult(String(input));
             return
         }
         if ((input === "+" || input === "-" || input === "*" || input === "/") &&
@@ -28,10 +29,14 @@ export default function Buttons() {
         setResult(0);
     }
 
+    const invert = () => {
+
+    }
+
     const calculate = () => {
         try {
             setResult(math.evaluate(result));
-        } catch (error) {
+        } catch (error) {
             setResult("Error");
         }
     }
@@ -40,10 +45,16 @@ export default function Buttons() {
         <>
             <div className={styles.overview}>
                 <div className={styles.row}>
+                    <Button onClick={reset}>AC</Button>
+                    <Button>+/-</Button>
+                    <Button>%</Button>
+                    <Button onClick={() => addInput("/")}>÷</Button>
+                </div>
+                <div className={styles.row}>
                     <Button onClick={() => addInput(7)}>7</Button>
                     <Button onClick={() => addInput(8)}>8</Button>
                     <Button onClick={() => addInput(9)}>9</Button>
-                    <Button onClick={() => addInput("+")}>+</Button>
+                    <Button onClick={() => addInput("*")}>X</Button>
                 </div>
                 <div className={styles.row}>
                     <Button onClick={() => addInput(4)}>4</Button>
@@ -55,13 +66,13 @@ export default function Buttons() {
                     <Button onClick={() => addInput(1)}>1</Button>
                     <Button onClick={() => addInput(2)}>2</Button>
                     <Button onClick={() => addInput(3)}>3</Button>
-                    <Button onClick={() => addInput("*")}>*</Button>
+                    <Button onClick={() => addInput("+")}>+</Button>
                 </div>
                 <div className={styles.row}>
                     <Button onClick={() => addInput(0)}>0</Button>
-                    <Button onClick={reset}>CE</Button>
+                    <Button onClick={() => addInput(".")}>.</Button>
                     <Button onClick={calculate}>=</Button>
-                    <Button onClick={() => addInput("/")}>/</Button>
+                    <Button onClick={() => window.location = "https://github.com/0xClaude/react-calculator"}>&lt;/&gt;</Button>
                 </div>
             </div>
         </>

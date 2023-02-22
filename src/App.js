@@ -7,7 +7,7 @@ export const Context = createContext();
 
 function App() {
 
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState("0");
 
   const value = useMemo(() => { return { result, setResult }}, [result, setResult]);
 
