@@ -1,0 +1,13 @@
+.overview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
+}

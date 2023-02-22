@@ -1,0 +1,7 @@
+.result {
+	display: flex;
+	background-color: rgb(53, 153, 240);
+	padding: 1rem;
+	width: 25rem;
+	color: #ffffff;
+}

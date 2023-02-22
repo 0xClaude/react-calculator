@@ -1,0 +1,13 @@
+.button {
+    background-color: rgb(101, 101, 101);
+    padding: 2rem;
+    color: #FFFFFF;
+}
+
+.button:hover {
+    background-color: rgb(175, 174, 174);
+}
+
+.button:active {
+    background-color: rgb(144, 194, 238);
+}
