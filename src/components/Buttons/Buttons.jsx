@@ -4,20 +4,21 @@ import styles from "./Buttons.module.css";
 import { Context } from "../../App";
 import { create, all } from 'mathjs'
 
-
-const config = {}
-const math = create(all, config);
-
 export default function Buttons() {
 
     const { result, setResult } = useContext(Context);
 
+
+    const config = {}
+    const math = create(all, config);
+
     const addInput = (input) => {
-        if (result === 0  || result === "0") {
+        if (result === 0 || result === "0") {
             setResult(String(input))
             return
         }
-        if ((input === "+" || input === "-" || input === "*" || input === "/") && (result.charAt(result.length - 1) === "+" || result.charAt(result.length - 1) === "-" || result.charAt(result.length - 1) === "*" || result.charAt(result.length - 1) === "/")) {
+        if ((input === "+" || input === "-" || input === "*" || input === "/") &&
+            (result.charAt(result.length - 1) === "+" || result.charAt(result.length - 1) === "-" || result.charAt(result.length - 1) === "*" || result.charAt(result.length - 1) === "/")) {
             return
         }
         setResult(previous => previous + String(input));
@@ -28,12 +29,9 @@ export default function Buttons() {
     }
 
     const calculate = () => {
-        console.log("Evaluating");
         try {
-            const mresult = math.evaluate(result);
-            console.log(mresult);
-            setResult(mresult);
-        } catch (error) {
+            setResult(math.evaluate(result));
+        } catch (error) {
             setResult("Error");
         }
     }
@@ -62,7 +60,7 @@ export default function Buttons() {
                 <div className={styles.row}>
                     <Button onClick={() => addInput(0)}>0</Button>
                     <Button onClick={reset}>CE</Button>
-                    <Button onCLick={calculate}>=</Button>
+                    <Button onClick={calculate}>=</Button>
                     <Button onClick={() => addInput("/")}>/</Button>
                 </div>
             </div>
