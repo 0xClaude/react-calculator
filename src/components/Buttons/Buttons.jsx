@@ -102,25 +102,25 @@ export default function Buttons() {
                     <Button onClick={() => addInput("/")}>÷</Button>
                 </div>
                 <div className={styles.row}>
-                    <Button onClick={() => addInput(7)}>7</Button>
-                    <Button onClick={() => addInput(8)}>8</Button>
-                    <Button onClick={() => addInput(9)}>9</Button>
+                    <Button onClick={() => addInput("7")}>7</Button>
+                    <Button onClick={() => addInput("8")}>8</Button>
+                    <Button onClick={() => addInput("9")}>9</Button>
                     <Button onClick={() => addInput("*")}>X</Button>
                 </div>
                 <div className={styles.row}>
-                    <Button onClick={() => addInput(4)}>4</Button>
-                    <Button onClick={() => addInput(5)}>5</Button>
-                    <Button onClick={() => addInput(6)}>6</Button>
+                    <Button onClick={() => addInput("4")}>4</Button>
+                    <Button onClick={() => addInput("5")}>5</Button>
+                    <Button onClick={() => addInput("6")}>6</Button>
                     <Button onClick={() => addInput("-")}>-</Button>
                 </div>
                 <div className={styles.row}>
-                    <Button onClick={() => addInput(1)}>1</Button>
-                    <Button onClick={() => addInput(2)}>2</Button>
-                    <Button onClick={() => addInput(3)}>3</Button>
+                    <Button onClick={() => addInput("1")}>1</Button>
+                    <Button onClick={() => addInput("2")}>2</Button>
+                    <Button onClick={() => addInput("3")}>3</Button>
                     <Button onClick={() => addInput("+")}>+</Button>
                 </div>
                 <div className={styles.row}>
-                    <Button onClick={() => addInput(0)}>0</Button>
+                    <Button onClick={() => addInput("0")}>0</Button>
                     <Button onClick={() => addInput(".")}>.</Button>
                     <Button onClick={calculate}>=</Button>
                     <Button onClick={() => window.location = "https://github.com/0xClaude/react-calculator"}>&lt;/&gt;</Button>
