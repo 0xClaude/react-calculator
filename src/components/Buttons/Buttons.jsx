@@ -1,53 +1,104 @@
-import { useContext } from "react";
+import { all, create } from 'mathjs';
+import React, { useCallback, useContext, useEffect } from "react";
+import { Context } from "../../App";
 import Button from "./Button/Button";
 import styles from "./Buttons.module.css";
-import { Context } from "../../App";
-import { create, all } from 'mathjs'
+
+// Configuring the math module
+const config = {}
+const math = create(all, config);
+
+// Helper constants
+const operators = ["+", "-", "*", "/"];
+const decimal = ["."];
+
+// Define allowed keypresses
+const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "*", "/"];
 
 export default function Buttons() {
 
     const { result, setResult } = useContext(Context);
 
-
-    const config = {}
-    const math = create(all, config);
-
-    const addInput = (input) => {
-        if (input === "." && result.indexOf(".") > -1) { return }
-        if (result === 0 || result === "0") {
-            input === "." ? setResult("0.") : setResult(String(input));
-            return
+    // Handling (most) buttons
+    const addInput = useCallback((input) => {
+        // Handle decimals
+        if (decimal.includes(input)) {
+            // Add a zero at the beginning if needed
+            if ((input.charAt(input.length - 1) === "0") || (operators.includes(result.charAt(result.length - 1)))) {
+                setResult(previous => previous + "0.");
+                return;
+            }
+            // Don't allow two decimal points
+            if (decimal.includes(result.charAt(result.length - 1))) {
+                return;
+            }
         }
-        if ((input === "+" || input === "-" || input === "*" || input === "/") &&
-            (result.charAt(result.length - 1) === "+" || result.charAt(result.length - 1) === "-" || result.charAt(result.length - 1) === "*" || result.charAt(result.length - 1) === "/")) {
-            return
+
+        // Don't allow two operators consecutively
+        if (operators.includes(result.charAt(result.length - 1)) && (operators.includes(input) || decimal.includes(result.charAt(result.length - 1)))) {
+            return;
         }
+
+        // Handling the first number
+        if (result.length === 1 && result.charAt(0) === "0") {
+            setResult(input);
+            return;
+        }
+
+        // Handle the rest numbers
         setResult(previous => previous + String(input));
-    }
+    }, [result, setResult]);
 
+    // AC button
     const reset = () => {
-        setResult(0);
+        setResult("0");
     }
 
-    const invert = () => {
-
+    // +/- button
+    const plusminus = () => {
+        setResult(previous => String(math.evaluate(`${previous} * -1`)));
     }
 
-    const calculate = () => {
+    // Handling % button
+    const percentage = (perc) => {
+        setResult(String(result / 100));
+    }
+
+    // Handling = button
+    const calculate = useCallback(() => {
         try {
-            setResult(math.evaluate(result));
+            setResult(String(math.evaluate(result)));
         } catch (error) {
             setResult("Error");
         }
-    }
+    }, [result, setResult]);
+
+    // Add EventListeners for keypresses
+    useEffect(() => {
+        const keyHandler = ({ key }) => {
+            // Only allow certain keys
+            if (numbers.includes(key)) {
+                addInput(key);
+            } else if (key === "Enter") {
+                calculate();
+            }
+        }
+
+        window.addEventListener("keydown", keyHandler);
+
+        // Cleanup function
+        return () => {
+            window.removeEventListener("keydown", keyHandler);
+        }
+    }, [addInput, calculate]);
 
     return (
         <>
             <div className={styles.overview}>
                 <div className={styles.row}>
                     <Button onClick={reset}>AC</Button>
-                    <Button>+/-</Button>
-                    <Button>%</Button>
+                    <Button onClick={plusminus}>+/-</Button>
+                    <Button onClick={percentage}>%</Button>
                     <Button onClick={() => addInput("/")}>÷</Button>
                 </div>
                 <div className={styles.row}>
